@@ -28,7 +28,7 @@ function notFound(res: Response, value: string) {
 function conflict(res: Response, value: string) {
   return res.status(409).json({ errorMessage: `${value} already exists` })
 }
-// The user does not have permission returns 405 not allowed
+// The user does not have permission returns 405 not allowed.
 function notAllowed(res: Response, value: string) {
   return res.status(405).json({ errorMessage: `Now allowed` })
 }
