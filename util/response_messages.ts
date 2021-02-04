@@ -32,7 +32,7 @@ function conflict(res: Response, value: string) {
 function notAllowed(res: Response, value: string) {
   return res.status(405).json({ errorMessage: `Now allowed` })
 }
-// No content provided returns 204 missing arguments
+// No content provided returns 204 missing arguments.
 function noContent(res: Response) {
   return res.status(204).json({ errorMessage: `Missing required fields` })
 }
