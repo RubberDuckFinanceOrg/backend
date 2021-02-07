@@ -1,7 +1,12 @@
 import { Response } from 'express';
 
 // Get request has succeeded and returns 200 json
-function getOk(res: Response, value: [] | {}) {
+function getOk(res: Response, value: [] | {} | number, key?: string) {
+  const jsonInput: { [key: string]: any } = {}
+  if (key) {
+    jsonInput[key] = value
+    return res.status(200).json(jsonInput)
+  }
   return res.status(200).json(value)
 }
 // Post request has succeeded and returns 201 successfully created
@@ -43,6 +48,33 @@ function catchAllError(res: Response, err: {}) {
 }
 
 
+async function okOrNotFound(operation: 'edit' | 'delete' | 'get', res: Response, knexValue: any, value: string): Promise<Response> {
+  try {
+    const operations = {
+      edit: updateOk,
+      delete: deleteOk,
+      get: getOk
+    }
+    const action = operations[operation]
+    // is knex value an array? -> used for getting an individual value
+    if (Array.isArray(knexValue)) {
+      if (knexValue.length) {
+        return operations.get(res, knexValue)
+      } else {
+        return notFound(res, value)
+      }
+    }
+    // is knex value returning a 1 or 0. 1 => action performed on DB, 0  => not found
+    if (knexValue) {
+      return action(res, value)
+    } else {
+      return notFound(res, value)
+    }
+  } catch (err) {
+    return res.status(500).json({ errorMessage: 'Invalid input' })
+  }
+}
+
 export default {
   getOk,
   createOk,
@@ -53,5 +85,6 @@ export default {
   conflict,
   notAllowed,
   noContent,
-  catchAllError
+  catchAllError,
+  okOrNotFound
 }

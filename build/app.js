@@ -20,7 +20,7 @@ app.use('/', index_1.default);
 // Error Handling
 app.use(problems_details_response_1.default(problem_types_1.default));
 // 404
-app.get('*', function (req, res) {
+app.all('*', function (req, res) {
     response_messages_1.default.notFound(res, 'endpoint');
 });
 module.exports = app;

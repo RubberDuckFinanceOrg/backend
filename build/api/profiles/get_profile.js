@@ -25,12 +25,8 @@ router.get('/profile/:id', authorization_1.default, (req, res) => __awaiter(void
     try {
         const id = req.params.id;
         const profile = yield knex_models_1.GetOne('profiles', 'id', id);
-        if (profile.length) {
-            response_messages_1.default.getOk(res, profile);
-        }
-        else {
-            response_messages_1.default.notFound(res, 'profile');
-        }
+        console.log('profile', typeof profile, profile);
+        response_messages_1.default.okOrNotFound('get', res, profile, 'profile');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

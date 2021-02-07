@@ -15,7 +15,7 @@ router.post('/login', validate({ body: userSchema }), async (req: Request, res: 
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user);
       if (token) {
-        status.getOk(res, token)
+        status.getOk(res, token, 'token')
       }
     } else {
       status.unauthorized(res, 'invalid email or password')

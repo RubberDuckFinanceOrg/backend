@@ -4,11 +4,12 @@ import status from '../../util/response_messages'
 import authorization from '../middleware/authorization';
 const router = express()
 
-router.delete('/profile/:id', authorization, async (req: Request, res: Response) => {
+
+router.delete('/banks/:id', authorization, async (req: Request, res: Response) => {
   try {
-    const id: string | undefined = req.params.id;
-    const deleted = await Delete('profiles', 'id', id);
-    await status.okOrNotFound('delete', res, deleted, 'profile')
+    const id = req.params.id;
+    const deleted = await Delete('banks', 'id', id);
+    status.okOrNotFound('delete', res, deleted, 'bank')
   } catch (err) {
     status.catchAllError(res, err)
   }

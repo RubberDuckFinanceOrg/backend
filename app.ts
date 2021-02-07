@@ -17,7 +17,7 @@ app.use('/', routes)
 // Error Handling
 app.use(configureProblemDetailsResponse(problemTypes));
 // 404
-app.get('*', function (req, res) {
+app.all('*', function (req, res) {
   status.notFound(res, 'endpoint')
 });
 

@@ -14,16 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const express_1 = __importDefault(require("express"));
 const knex_models_1 = require("../../util/knex_models");
 const response_messages_1 = __importDefault(require("../../util/response_messages"));
-const authorization_1 = __importDefault(require("../middleware/authorization"));
-const profile_schema_1 = __importDefault(require("./profile_schema"));
 const json_validator_1 = __importDefault(require("../middleware/json_validator"));
+const bank_schema_1 = __importDefault(require("./bank_schema"));
+const authorization_1 = __importDefault(require("../middleware/authorization"));
 const router = express_1.default();
-router.put('/profile/:id', authorization_1.default, json_validator_1.default({ body: profile_schema_1.default }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/banks', authorization_1.default, json_validator_1.default({ body: bank_schema_1.default }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
-        const newProfile = yield req.body;
-        const editProfile = yield knex_models_1.Edit('profiles', 'id', id, newProfile);
-        yield response_messages_1.default.okOrNotFound('edit', res, editProfile, 'profile');
+        const bank = yield req.body;
+        yield knex_models_1.Create('banks', bank);
+        response_messages_1.default.createOk(res, 'bank');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

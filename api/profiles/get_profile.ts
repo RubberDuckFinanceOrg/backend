@@ -15,11 +15,8 @@ router.get('/profile/:id', authorization, async (req: Request, res: Response) =>
   try {
     const id: string | undefined = req.params.id;
     const profile: Profile[] = await GetOne('profiles', 'id', id);
-    if (profile.length) {
-      status.getOk(res, profile)
-    } else {
-      status.notFound(res, 'profile')
-    }
+    console.log('profile', typeof profile, profile)
+    status.okOrNotFound('get', res, profile, 'profile')
   } catch (err) {
     status.catchAllError(res, err)
   }
