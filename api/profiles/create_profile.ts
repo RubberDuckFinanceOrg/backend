@@ -7,19 +7,15 @@ import profileSchema from './profile_schema'
 import authorization from '../middleware/authorization'
 const router = express()
 
-router.post(
-  '/profiles',
-  authorization,
-  validate({ body: profileSchema }),
-  async (req: Request, res: Response) => {
-    try {
-      const profile: Profile = await req.body;
-      await Create('profiles', profile);
-      status.createOk(res, 'profile')
-    } catch (err) {
-      status.catchAllError(res, err)
-    }
+router.post('/profiles', authorization, validate({ body: profileSchema }), async (req: Request, res: Response) => {
+  try {
+    const profile: Profile = await req.body;
+    await Create('profiles', profile);
+    status.createOk(res, 'profile')
+  } catch (err) {
+    status.catchAllError(res, err)
   }
+}
 );
 
 export = router;

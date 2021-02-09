@@ -1,16 +1,14 @@
 import express, { Request, Response } from 'express'
-import { GetAll } from '../../util/knex_models';
-import { Bank } from './types'
+import { Delete } from '../../util/knex_models';
 import status from '../../util/response_messages'
 import authorization from '../middleware/authorization';
 const router = express()
 
-
-router.get('/banks/:id', authorization, async (req: Request, res: Response) => {
+router.delete('/bank/:id', authorization, async (req: Request, res: Response) => {
   try {
     const id: string | undefined = req.params.id;
-    const bank: Bank[] = await GetAll('banks', 'user_id', id);
-    status.getOk(res, bank)
+    const deleted = await Delete('bank', 'id', id);
+    await status.okOrNotFound('delete', res, deleted, 'bank')
   } catch (err) {
     status.catchAllError(res, err)
   }
