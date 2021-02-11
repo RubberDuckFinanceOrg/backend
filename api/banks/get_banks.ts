@@ -9,7 +9,7 @@ const router = express()
 router.get('/banks/:id', authorization, async (req: Request, res: Response) => {
   try {
     const id: string | undefined = req.params.id;
-    const bank: Bank[] = await GetAll('banks', 'user_id', id);
+    const bank: Bank[] = await GetAll('banks', 'profile_id', id);
     status.getOk(res, bank)
   } catch (err) {
     status.catchAllError(res, err)
