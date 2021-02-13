@@ -1,6 +1,9 @@
 import user from '../users/index'
 import profile from '../profiles/index';
 import bank from '../banks/index';
+import income from '../income/index';
+import expenses from '../expenses/index';
+import loans from '../loans/index'
 import { Router, Request, Response } from 'express'
 
 const router = Router();
@@ -27,6 +30,27 @@ router.use('/api', bank.deleteBank)
 router.use('/api', bank.editBank)
 router.use('/api', bank.getBank)
 router.use('/api', bank.getBanks)
+
+// income routes
+router.use('/api', income.createIncome)
+router.use('/api', income.deleteIncome)
+router.use('/api', income.editIncome)
+router.use('/api', income.getIncome)
+router.use('/api', income.getIncomes)
+
+// expense routes
+router.use('/api', expenses.createExpense)
+router.use('/api', expenses.deleteExpense)
+router.use('/api', expenses.editExpense)
+router.use('/api', expenses.getExpense)
+router.use('/api', expenses.getExpenses)
+
+// loan routes
+router.use('/api', loans.createLoan)
+router.use('/api', loans.deleteLoan)
+router.use('/api', loans.editLoan)
+router.use('/api', loans.getLoan)
+router.use('/api', loans.getLoans)
 
 
 export = router
