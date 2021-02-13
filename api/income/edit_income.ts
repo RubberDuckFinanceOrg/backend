@@ -12,8 +12,8 @@ router.put('/income/:id', authorization, validate({ body: incomeSchema }), async
   try {
     const id: string | undefined = req.params.id;
     const newIncome: Income = await req.body;
-    const editIncome = await Edit('profiles', 'id', id, newIncome);
-    await status.okOrNotFound('edit', res, editIncome, 'profile')
+    const editIncome = await Edit('income', 'id', id, newIncome);
+    await status.okOrNotFound('edit', res, editIncome, 'income')
   } catch (err) {
     status.catchAllError(res, err)
   }

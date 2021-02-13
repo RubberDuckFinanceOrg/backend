@@ -9,7 +9,7 @@ router.get('/income/:id', authorization, async (req: Request, res: Response) => 
   try {
     const id: string = req.params.id;
     const income: Income[] = await GetOne('income', 'id', id);
-    status.okOrNotFound('get', res, income, 'profile')
+    status.okOrNotFound('get', res, income, 'income')
   } catch (err) {
     status.catchAllError(res, err);
   }
