@@ -20,7 +20,7 @@ router.get('/bank/:id', authorization_1.default, (req, res) => __awaiter(void 0,
     try {
         const id = req.params.id;
         const bank = yield knex_models_1.GetOne('banks', 'id', id);
-        response_messages_1.default.okOrNotFound('get', res, bank, 'profile');
+        response_messages_1.default.okOrNotFound('get', res, bank, 'bank');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

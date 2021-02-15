@@ -4,6 +4,7 @@ import bank from '../banks/index';
 import income from '../income/index';
 import expenses from '../expenses/index';
 import loans from '../loans/index'
+import creditCards from '../credit_cards/index';
 import { Router, Request, Response } from 'express'
 
 const router = Router();
@@ -51,6 +52,13 @@ router.use('/api', loans.deleteLoan)
 router.use('/api', loans.editLoan)
 router.use('/api', loans.getLoan)
 router.use('/api', loans.getLoans)
+
+// credit card routes
+router.use('/api', creditCards.createCreditCard)
+router.use('/api', creditCards.deleteCreditCard)
+router.use('/api', creditCards.editCreditCard)
+router.use('/api', creditCards.getCreditCard)
+router.use('/api', creditCards.getCreditCards)
 
 
 export = router
