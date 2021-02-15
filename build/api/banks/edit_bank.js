@@ -23,12 +23,7 @@ router.put('/banks/:id', authorization_1.default, json_validator_1.default({ bod
         const id = req.params.id;
         const bankData = yield req.body;
         const editBank = yield knex_models_1.Edit('banks', 'id', id, bankData);
-        if (editBank) {
-            response_messages_1.default.createOk(res, 'bank');
-        }
-        else {
-            response_messages_1.default.notFound(res, 'bank');
-        }
+        response_messages_1.default.okOrNotFound('edit', res, editBank, 'bank');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

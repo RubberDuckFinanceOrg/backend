@@ -16,11 +16,11 @@ const knex_models_1 = require("../../util/knex_models");
 const response_messages_1 = __importDefault(require("../../util/response_messages"));
 const authorization_1 = __importDefault(require("../middleware/authorization"));
 const router = express_1.default();
-router.get('/bank/:id', authorization_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/expenses/:id', authorization_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        const bank = yield knex_models_1.GetOne('banks', 'id', id);
-        response_messages_1.default.okOrNotFound('get', res, bank, 'profile');
+        const deleted = yield knex_models_1.Delete('expenses', 'id', id);
+        response_messages_1.default.okOrNotFound('delete', res, deleted, 'expense');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

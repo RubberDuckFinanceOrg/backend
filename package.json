@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc --project ./",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "start": "node server.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --config ./jest.config.js --watch",

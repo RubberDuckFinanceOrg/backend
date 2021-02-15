@@ -14,13 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 const express_1 = __importDefault(require("express"));
 const knex_models_1 = require("../../util/knex_models");
 const response_messages_1 = __importDefault(require("../../util/response_messages"));
+const json_validator_1 = __importDefault(require("../middleware/json_validator"));
+const expense_schema_1 = __importDefault(require("./expense_schema"));
 const authorization_1 = __importDefault(require("../middleware/authorization"));
 const router = express_1.default();
-router.get('/bank/:id', authorization_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/expenses', authorization_1.default, json_validator_1.default({ body: expense_schema_1.default }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
-        const bank = yield knex_models_1.GetOne('banks', 'id', id);
-        response_messages_1.default.okOrNotFound('get', res, bank, 'profile');
+        const expense = yield req.body;
+        yield knex_models_1.Create('expenses', expense);
+        response_messages_1.default.createOk(res, 'expense');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

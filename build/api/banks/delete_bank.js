@@ -20,12 +20,7 @@ router.delete('/banks/:id', authorization_1.default, (req, res) => __awaiter(voi
     try {
         const id = req.params.id;
         const deleted = yield knex_models_1.Delete('banks', 'id', id);
-        if (deleted) {
-            response_messages_1.default.deleteOk(res, 'bank');
-        }
-        else {
-            response_messages_1.default.notFound(res, 'bank');
-        }
+        response_messages_1.default.okOrNotFound('delete', res, deleted, 'bank');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

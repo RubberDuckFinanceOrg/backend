@@ -12,8 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Get request has succeeded and returns 200 json
 function getOk(res, value, key) {
     const jsonInput = {};
-    console.log('key', key);
-    if (key !== undefined) {
+    if (key) {
         jsonInput[key] = value;
         return res.status(200).json(jsonInput);
     }
