@@ -5,7 +5,8 @@ import income from '../income/index';
 import expenses from '../expenses/index';
 import loans from '../loans/index'
 import creditCards from '../credit_cards/index';
-import assets from '../assets/index'
+import assets from '../assets/index';
+import isa from '../isa/index';
 import { Router, Request, Response } from 'express'
 
 const router = Router();
@@ -69,8 +70,13 @@ router.use('/api', assets.deleteAsset)
 router.use('/api', assets.editAsset)
 router.use('/api', assets.getAsset)
 router.use('/api', assets.getAssets)
-// isa routes
 
+// isa routes
+router.use('/api', isa.createIsa)
+router.use('/api', isa.editIsa)
+router.use('/api', isa.deleteIsa)
+router.use('/api', isa.getIsa)
+router.use('/api', isa.getIsas)
 // affiliate routes
 
 

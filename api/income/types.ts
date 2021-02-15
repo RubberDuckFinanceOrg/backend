@@ -1,14 +1,17 @@
 type Income = {
-  id: string,
-  pre_tax_income: number,
-  post_tax_income: number
-  income_source: string,
-  isa_income: boolean,
-  bank_name: string,
-  account_name: string,
-  payment_frequency: string,
-  next_pay_day: Date,
+  asset_value: number,
+  asset_name: string,
+  asset_type: string,
+  growth_rate: number,
+  contribution_frequency: string,
+  contribution_amount: number,
+  next_contribution: Date,
+  payment_method: string,
+  payment_type: string,
+  pre_tax: boolean,
+  employee_match: boolean,
   profile_id: number
 }
 
 export = Income
+
