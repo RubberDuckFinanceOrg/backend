@@ -6,7 +6,7 @@ import authorization from '../middleware/authorization';
 const router = express()
 
 
-router.get('/affiliate/:id', authorization, async (req: Request, res: Response) => {
+router.get('/affiliates/:id', authorization, async (req: Request, res: Response) => {
   try {
     const id: string | undefined = req.params.id;
     const affiliate: Affiliate[] = await GetAll('affiliate', 'profile_id', id);
