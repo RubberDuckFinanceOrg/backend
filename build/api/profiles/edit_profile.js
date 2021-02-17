@@ -23,12 +23,7 @@ router.put('/profile/:id', authorization_1.default, json_validator_1.default({ b
         const id = req.params.id;
         const newProfile = yield req.body;
         const editProfile = yield knex_models_1.Edit('profiles', 'id', id, newProfile);
-        if (editProfile) {
-            response_messages_1.default.createOk(res, 'profile');
-        }
-        else {
-            response_messages_1.default.notFound(res, 'profile');
-        }
+        yield response_messages_1.default.okOrNotFound('edit', res, editProfile, 'profile');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

@@ -8,11 +8,7 @@ router.delete('/profile/:id', authorization, async (req: Request, res: Response)
   try {
     const id: string | undefined = req.params.id;
     const deleted = await Delete('profiles', 'id', id);
-    if (deleted) {
-      status.deleteOk(res, 'profile')
-    } else {
-      status.notFound(res, 'profile')
-    }
+    await status.okOrNotFound('delete', res, deleted, 'profile')
   } catch (err) {
     status.catchAllError(res, err)
   }

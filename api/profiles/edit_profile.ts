@@ -8,24 +8,16 @@ import validate from '../middleware/json_validator'
 const router = express()
 
 
-router.put(
-  '/profile/:id',
-  authorization,
-  validate({ body: profileSchema }),
-  async (req: Request, res: Response) => {
-    try {
-      const id: string | undefined = req.params.id;
-      const newProfile: Profile = await req.body;
-      const editProfile = await Edit('profiles', 'id', id, newProfile);
-      if (editProfile) {
-        status.createOk(res, 'profile')
-      } else {
-        status.notFound(res, 'profile')
-      }
-    } catch (err) {
-      status.catchAllError(res, err)
-    }
+router.put('/profile/:id', authorization, validate({ body: profileSchema }), async (req: Request, res: Response) => {
+  try {
+    const id: string | undefined = req.params.id;
+    const newProfile: Profile = await req.body;
+    const editProfile = await Edit('profiles', 'id', id, newProfile);
+    await status.okOrNotFound('edit', res, editProfile, 'profile')
+  } catch (err) {
+    status.catchAllError(res, err)
   }
+}
 );
 
 export = router;

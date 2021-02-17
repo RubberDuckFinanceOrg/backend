@@ -1,9 +1,4 @@
 "use strict";
-// const express = require('express');
-// const { GetOne } = require('../../util/knex_models');
-// const handleError = require('../../util/handle_error');
-// const authorization = require('../middleware/authorization');
-// const router = express();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -25,12 +20,7 @@ router.get('/profile/:id', authorization_1.default, (req, res) => __awaiter(void
     try {
         const id = req.params.id;
         const profile = yield knex_models_1.GetOne('profiles', 'id', id);
-        if (profile.length) {
-            response_messages_1.default.getOk(res, profile);
-        }
-        else {
-            response_messages_1.default.notFound(res, 'profile');
-        }
+        response_messages_1.default.okOrNotFound('get', res, profile, 'profile');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

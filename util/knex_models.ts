@@ -7,7 +7,8 @@ export {
   Delete,
   GetOne,
   GetAll,
-  Users
+  Users,
+  recordCheck
 };
 
 // ! Reference Information
@@ -52,6 +53,11 @@ function GetAll(database: Database, key: Key, id: Id) {
 function GetOne(database: Database, key: Key, id: Id) {
   const location = generateLocationObject(key, id);
   return db(database).where(location);
+}
+
+async function recordCheck(database: Database, key: Key) {
+  const ref: any[] = await db(database).where({ code: key })
+  return (ref.length === 1)
 }
 
 // ! Place holder for user testing purposes

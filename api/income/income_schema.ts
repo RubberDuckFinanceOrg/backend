@@ -5,6 +5,8 @@ function incomeSchema() {
       'pre_tax_income',
       'post_tax_income',
       'income_source',
+      'bank_name',
+      'account_name',
       'direct_deposit_account',
       'payment_frequency',
       'next_pay_day',
@@ -20,6 +22,14 @@ function incomeSchema() {
         minimum: 1
       },
       income_source: {
+        type: 'string',
+        minLength: 1
+      },
+      bank_name: {
+        type: 'string',
+        minLength: 1
+      },
+      account_name: {
         type: 'string',
         minLength: 1
       },

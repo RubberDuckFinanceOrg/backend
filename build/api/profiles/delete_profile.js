@@ -20,12 +20,7 @@ router.delete('/profile/:id', authorization_1.default, (req, res) => __awaiter(v
     try {
         const id = req.params.id;
         const deleted = yield knex_models_1.Delete('profiles', 'id', id);
-        if (deleted) {
-            response_messages_1.default.deleteOk(res, 'profile');
-        }
-        else {
-            response_messages_1.default.notFound(res, 'profile');
-        }
+        yield response_messages_1.default.okOrNotFound('delete', res, deleted, 'profile');
     }
     catch (err) {
         response_messages_1.default.catchAllError(res, err);

@@ -26,7 +26,7 @@ router.post('/login', json_validator_1.default({ body: user_schema_1.default }),
         if (user && bcryptjs_1.default.compareSync(password, user.password)) {
             const token = generate_token_1.default(user);
             if (token) {
-                response_messages_1.default.getOk(res, token);
+                response_messages_1.default.getOk(res, token, 'token');
             }
         }
         else {
