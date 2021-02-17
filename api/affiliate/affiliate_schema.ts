@@ -3,7 +3,6 @@ function affiliateSchema() {
     type: 'object',
     required: [
       'profile_id',
-      'referrer_id',
       'code'
     ],
     properties: {

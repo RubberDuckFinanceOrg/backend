@@ -18,14 +18,17 @@ const json_validator_1 = __importDefault(require("../middleware/json_validator")
 const affiliate_schema_1 = __importDefault(require("./affiliate_schema"));
 const authorization_1 = __importDefault(require("../middleware/authorization"));
 const router = express_1.default();
-router.post('/affiliate', authorization_1.default, json_validator_1.default({ body: affiliate_schema_1.default }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/affiliate/:id', authorization_1.default, json_validator_1.default({ body: affiliate_schema_1.default }), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const userId = req.params.id;
         const affiliate = yield req.body;
         // check to see if user has submitted unique affiliate code
         const valueExists = yield knex_models_1.recordCheck('affiliate', affiliate.code);
         if (valueExists) {
             return response_messages_1.default.conflict(res, 'Affiliate code');
         }
+        const user = yield knex_models_1.GetOne('users', 'id', userId);
+        affiliate.referrer_id = user[0].referrer_id;
         yield knex_models_1.Create('affiliate', affiliate);
         response_messages_1.default.createOk(res, 'affiliate');
     }
