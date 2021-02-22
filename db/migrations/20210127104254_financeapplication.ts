@@ -90,11 +90,11 @@ export async function up(knex: Knex): Promise<void> {
       income.string('payment_frequency').notNullable();
       income.date('next_pay_day');
       income
-        .integer('profile_id')
+        .integer('bank_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('profiles')
+        .inTable('banks')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
@@ -122,7 +122,7 @@ export async function up(knex: Knex): Promise<void> {
     //     .onUpdate('CASCADE');
     // })
 
-    .createTable('expenses', expenses => {
+    .createTable('expenses_linkedTo_bank', expenses => {
       expenses.increments();
       expenses.string('expense_name').notNullable();
       expenses.integer('amount').notNullable();
@@ -133,16 +133,16 @@ export async function up(knex: Knex): Promise<void> {
       expenses.boolean('subscription').notNullable();
       expenses.string('category').notNullable();
       expenses
-        .integer('profile_id')
+        .integer('bank_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('profiles')
+        .inTable('banks')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
 
-    .createTable('loans', loans => {
+    .createTable('loans_linkedTo_bank', loans => {
       loans.increments();
       loans.integer('original_loan_amount').notNullable();
       loans.integer('outstanding_loan_amount').notNullable();
@@ -156,33 +156,11 @@ export async function up(knex: Knex): Promise<void> {
       loans.string('payment_method').notNullable();
       loans.string('payment_type')
       loans
-        .integer('profile_id')
+        .integer('bank_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('profiles')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-    })
-
-    .createTable('credit_cards', credit_cards => {
-      credit_cards.increments();
-      credit_cards.integer('outstanding_credit').notNullable();
-      credit_cards.integer('credit_limit').notNullable();
-      credit_cards.integer('interest_rate').notNullable();
-      credit_cards.integer('minimum_payment').notNullable();
-      credit_cards.integer('current_payment').notNullable();
-      credit_cards.string('credit_card_name').notNullable();
-      credit_cards.date('next_due_date').notNullable();
-      credit_cards.string('payment_frequency').notNullable();
-      credit_cards.string('payment_method').notNullable();
-      credit_cards.string('payment_type')
-      credit_cards
-        .integer('profile_id')
-        .unsigned()
-        .notNullable()
-        .references('id')
-        .inTable('profiles')
+        .inTable('banks')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
@@ -201,11 +179,11 @@ export async function up(knex: Knex): Promise<void> {
       assets.boolean('pre_tax').defaultTo(false);
       assets.boolean('employee_match').defaultTo(false);
       assets
-        .integer('profile_id')
+        .integer('bank_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('profiles')
+        .inTable('banks')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
     })
@@ -230,6 +208,71 @@ export async function up(knex: Knex): Promise<void> {
     })
 
 
+    .createTable('credit_cards', credit_cards => {
+      credit_cards.increments();
+      credit_cards.integer('outstanding_credit').notNullable();
+      credit_cards.integer('credit_limit').notNullable();
+      credit_cards.integer('interest_rate').notNullable();
+      credit_cards.integer('minimum_payment').notNullable();
+      credit_cards.integer('current_payment').notNullable();
+      credit_cards.string('credit_card_name').notNullable();
+      credit_cards.date('next_due_date').notNullable();
+      credit_cards.string('payment_frequency').notNullable();
+      credit_cards.string('payment_method').notNullable();
+      credit_cards.string('payment_type')
+      credit_cards
+        .integer('bank_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('banks')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+    })
+
+    .createTable('expenses_linkedTo_creditCards', expenses => {
+      expenses.increments();
+      expenses.string('expense_name').notNullable();
+      expenses.integer('amount').notNullable();
+      expenses.string('frequency').notNullable();
+      expenses.date('next_due_date');
+      expenses.string('payment_method');
+      expenses.string('payment_type');
+      expenses.boolean('subscription').notNullable();
+      expenses.string('category').notNullable();
+      expenses
+        .integer('credit_cards_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('credit_cards')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+    })
+
+    .createTable('loans_linkedTo_creditCards', loans => {
+      loans.increments();
+      loans.integer('original_loan_amount').notNullable();
+      loans.integer('outstanding_loan_amount').notNullable();
+      loans.integer('interest_rate').notNullable();
+      loans.integer('minimum_payment').notNullable();
+      loans.integer('current_payment').notNullable();
+      loans.string('loan_name').notNullable();
+      loans.string('loan_type').notNullable()
+      loans.date('next_due_date').notNullable();
+      loans.string('payment_frequency').notNullable();
+      loans.string('payment_method').notNullable();
+      loans.string('payment_type')
+      loans
+        .integer('credit_cards_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('credit_cards')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+    })
+
     .createTable('affiliate', affiliate => {
       affiliate.increments();
       affiliate.string('referrer_id');
@@ -250,11 +293,13 @@ export async function up(knex: Knex): Promise<void> {
 export async function down(knex: Knex): Promise<void> {
   return knex.schema
     .dropTableIfExists('affiliate')
+    .dropTableIfExists('loans_linkedTo_creditCards')
+    .dropTableIfExists('expenses_linkedTo_creditCards')
+    .dropTableIfExists('credit_cards')
     .dropTableIfExists('isa')
     .dropTableIfExists('assets')
-    .dropTableIfExists('credit_cards')
-    .dropTableIfExists('loans')
-    .dropTableIfExists('expenses')
+    .dropTableIfExists('loans_linkedTo_bank')
+    .dropTableIfExists('expenses_linkedTo_bank')
     .dropTableIfExists('income')
     .dropTableIfExists('transfers')
     .dropTableIfExists('banks')
