@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.recordCheck = exports.Users = exports.GetAll = exports.GetOne = exports.Delete = exports.Edit = exports.Create = void 0;
+exports.GetTimeline = exports.recordCheck = exports.Users = exports.GetAll = exports.GetOne = exports.Delete = exports.Edit = exports.Create = void 0;
 const db_config_1 = __importDefault(require("../db/db-config"));
 const generate_location_1 = __importDefault(require("./generate_location"));
 // Create a record
@@ -57,6 +57,13 @@ function recordCheck(database, key) {
     });
 }
 exports.recordCheck = recordCheck;
+function GetTimeline(database, value) {
+    console.log('database and value', database, value);
+    return db_config_1.default(database)
+        .where({ bank_name: value })
+        .orderBy('id');
+}
+exports.GetTimeline = GetTimeline;
 // ! Place holder for user testing purposes
 function Users() {
     return db_config_1.default('users').select('email', 'id', 'referrer_id', 'referral_id');

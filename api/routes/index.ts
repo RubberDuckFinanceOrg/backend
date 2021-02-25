@@ -34,6 +34,7 @@ router.use('/api', bank.deleteBank)
 router.use('/api', bank.editBank)
 router.use('/api', bank.getBank)
 router.use('/api', bank.getBanks)
+router.use('/api', bank.getTimeline)
 
 // transfer routes
 

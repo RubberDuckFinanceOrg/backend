@@ -8,7 +8,8 @@ export {
   GetOne,
   GetAll,
   Users,
-  recordCheck
+  recordCheck,
+  GetTimeline
 };
 
 // ! Reference Information
@@ -58,6 +59,13 @@ function GetOne(database: Database, key: Key, id: Id) {
 async function recordCheck(database: Database, key: Key) {
   const ref: any[] = await db(database).where({ code: key })
   return (ref.length === 1)
+}
+
+function GetTimeline(database: Database, value: string) {
+  console.log('database and value', database, value)
+  return db(database)
+    .where({ bank_name: value })
+    .orderBy('id');
 }
 
 // ! Place holder for user testing purposes
