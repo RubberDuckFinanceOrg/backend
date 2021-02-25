@@ -8,10 +8,12 @@ const delete_bank_1 = __importDefault(require("./delete_bank"));
 const edit_bank_1 = __importDefault(require("./edit_bank"));
 const get_bank_1 = __importDefault(require("./get_bank"));
 const get_banks_1 = __importDefault(require("./get_banks"));
+const timeline_1 = __importDefault(require("./timeline"));
 exports.default = {
     createBank: create_bank_1.default,
     deleteBank: delete_bank_1.default,
     editBank: edit_bank_1.default,
     getBank: get_bank_1.default,
-    getBanks: get_banks_1.default
+    getBanks: get_banks_1.default,
+    getTimeline: timeline_1.default
 };

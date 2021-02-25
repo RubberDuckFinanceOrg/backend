@@ -33,6 +33,7 @@ router.use('/api', index_3.default.deleteBank);
 router.use('/api', index_3.default.editBank);
 router.use('/api', index_3.default.getBank);
 router.use('/api', index_3.default.getBanks);
+router.use('/api', index_3.default.getTimeline);
 // transfer routes
 // income routes
 router.use('/api', index_4.default.createIncome);
