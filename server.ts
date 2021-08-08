@@ -1,10 +1,10 @@
-import app from './app';
-import http from 'http'
+import app from "./app";
+import http from "http";
 
 // Port
-const port: string | number = 3000;
+const port: string | number = process.env.SERVERURL || 3000;
 
-app.set('port', port);
+app.set("port", port);
 
 // Create HTTP server.
 const server = http.createServer(app);
