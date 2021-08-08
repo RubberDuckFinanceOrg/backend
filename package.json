@@ -13,6 +13,7 @@
     "postinstall": "tsc",
     "watch": "nodemon server.js",
     "ts": "tsc && node build/server.js",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --config ./jest.config.js --watch",
